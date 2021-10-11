@@ -4,47 +4,47 @@ require "attribute_defaults/default"
 
 module AttributeDefaults
   extend ActiveSupport::Concern
-  
+
   included do
     class_attribute :attribute_defaults
     self.attribute_defaults = []
   end
-  
+
   module ClassMethods
     # Define default values for attributes on new records. Requires a hash of <tt>attribute => value</tt> pairs, or a single attribute with an associated block.
     # If the value is a block, it will be called to retrieve the default value.
     # If the value is a symbol, a method by that name will be called on the object to retrieve the default value.
-    # 
+    #
     # The following code demonstrates the different ways default values can be specified. Defaults are applied in the order they are defined.
-    # 
+    #
     #   class Person < ActiveRecord::Base
     #     defaults :name => 'My name', :city => lambda { 'My city' }
-    #     
+    #
     #     default :birthdate do |person|
     #       Date.today if person.wants_birthday_today?
     #     end
-    #     
+    #
     #     default :favourite_colour => :default_favourite_colour
-    #     
+    #
     #     def default_favourite_colour
     #       "Blue"
     #     end
     #   end
-    # 
+    #
     # The <tt>defaults</tt> and the <tt>default</tt> methods behave the same way. Use whichever is appropriate.
     #
     # The default values are only used if the key is not present in the given attributes.
-    # 
+    #
     #   p = Person.new
     #   p.name # "My name"
     #   p.city # "My city"
-    #   
+    #
     #   p = Person.new(:name => nil)
     #   p.name # nil
     #   p.city # "My city"
     #
     # == Default values for belongs_to associations
-    # 
+    #
     # Default values can also be specified for an association. For instance:
     #
     #   class Student < ActiveRecord::Base
@@ -56,7 +56,7 @@ module AttributeDefaults
     #
     #   s = Student.new
     #   s.school # => #<School: ...>
-    # 
+    #
     #   s = Student.new(:school_id => nil)
     #   s.school # => nil
     #
@@ -65,21 +65,21 @@ module AttributeDefaults
       default_objects = case
       when defaults.is_a?(Hash)
         defaults.map { |attribute, value| Default.new(attribute, value) }
-        
+
       when defaults.is_a?(Symbol) && block
         Default.new(defaults, block)
-        
+
       else
         raise "pass either a hash of attribute/value pairs, or a single attribute with a block"
       end
-      
+
       self.attribute_defaults += Array.wrap(default_objects)
     end
-    
+
     alias_method :default, :defaults
   end
 
-  def initialize(attributes = nil, options = {})
+  def initialize(attributes = nil)
     super do |record|
       record.apply_default_attribute_values(attributes)
       yield record if block_given?
