@@ -6,4 +6,5 @@ group :development, :test do
   gem 'mysql2'
   gem 'rake'
   gem 'rspec'
+  gem 'rspec_junit_formatter'
 end
