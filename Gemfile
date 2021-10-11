@@ -1,5 +1,9 @@
 source "http://rubygems.org"
 
-gem 'activerecord', '>= 4.1.0'
-gem 'mysql2'
-gem 'rspec'
+gem 'activerecord', '~> 4.2.0'
+
+group :development, :test do
+  gem 'mysql2'
+  gem 'rake'
+  gem 'rspec'
+end
