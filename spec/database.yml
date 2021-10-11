@@ -1,7 +1,4 @@
-mysql:
-  :adapter: mysql2
-  :host: localhost
-  :username: rails
-  :password:
-  :database: rails_plugin_test
-  :socket: /tmp/mysql.sock
+test:
+  adapter: sqlite3
+  database: db/test.sqlite3
+
