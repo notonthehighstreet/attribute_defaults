@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.homepage    = "http://github.com/jviney/attribute_defaults"
   
-  s.add_dependency "activerecord", ">= 4.1.0"
+  s.add_dependency "activerecord", ">= 5.0.0"
   
   s.add_development_dependency "rspec"
   s.add_development_dependency "mysql2"
