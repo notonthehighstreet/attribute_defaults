@@ -1,3 +1,3 @@
 rubyGemPipeline(
-    ruby_version: 2.6
+    ruby_version: 3.0
 )
